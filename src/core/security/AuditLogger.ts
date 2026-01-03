@@ -52,8 +52,6 @@ export class AuditLogger {
       userAgent: entry.userAgent || 'RPA-Platform/1.0',
       result: entry.result || 'success',
       errorMessage: entry.errorMessage,
-      details: (entry as any).details,
-      error: (entry as any).error,
     };
 
     // Add to buffer

@@ -48,7 +48,7 @@ export class Encryption {
       const iv = crypto.randomBytes(this.ivLength);
 
       // Create cipher
-      const cipher = crypto.createCipheriv(this.algorithm, key, iv);
+      const cipher = crypto.createCipheriv(this.algorithm, key, iv) as crypto.CipherGCM;
 
       // Encrypt data
       const encrypted = Buffer.concat([
@@ -100,7 +100,7 @@ export class Encryption {
       );
 
       // Create decipher
-      const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
+      const decipher = crypto.createDecipheriv(this.algorithm, key, iv) as crypto.DecipherGCM;
       decipher.setAuthTag(tag);
 
       // Decrypt data
@@ -164,7 +164,7 @@ export class Encryption {
       );
       const iv = crypto.randomBytes(this.ivLength);
 
-      const cipher = crypto.createCipheriv(this.algorithm, key, iv);
+      const cipher = crypto.createCipheriv(this.algorithm, key, iv) as crypto.CipherGCM;
 
       // Set additional authenticated data
       cipher.setAAD(Buffer.from(additionalData, 'utf8'));
@@ -229,7 +229,7 @@ export class Encryption {
         'sha256'
       );
 
-      const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
+      const decipher = crypto.createDecipheriv(this.algorithm, key, iv) as crypto.DecipherGCM;
       decipher.setAuthTag(tag);
       decipher.setAAD(aad);
 

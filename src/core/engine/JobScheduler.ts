@@ -48,7 +48,7 @@ export class JobScheduler {
       action: 'job.scheduled',
       resource: 'scheduled-job',
       resourceId: jobConfig.id,
-      details: {
+      changes: {
         schedule: jobConfig.schedule.expression,
         timezone: jobConfig.schedule.timezone,
         nextRun: cronJob.nextDate().toISO()
@@ -101,7 +101,7 @@ export class JobScheduler {
         action: 'job.execution.failed',
         resource: 'scheduled-job',
         resourceId: jobConfig.id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        errorMessage: error instanceof Error ? error.message : 'Unknown error'
       });
 
       // Trigger retry if configured

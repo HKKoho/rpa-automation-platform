@@ -55,8 +55,29 @@ const nextConfig = {
         net: false,
         tls: false,
         crypto: false,
+        stream: false,
+        path: false,
+        os: false,
+        'mock-aws-s3': false,
+        'aws-sdk': false,
+        'nock': false,
       };
     }
+
+    // Ignore problematic dependencies
+    config.externals = config.externals || [];
+    config.externals.push({
+      '@mapbox/node-pre-gyp': 'commonjs @mapbox/node-pre-gyp',
+      'mock-aws-s3': 'mock-aws-s3',
+      'aws-sdk': 'aws-sdk',
+      'nock': 'nock',
+    });
+
+    // Handle HTML files in node_modules
+    config.module.rules.push({
+      test: /\.html$/,
+      type: 'asset/resource',
+    });
 
     return config;
   },

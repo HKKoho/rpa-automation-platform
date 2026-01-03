@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { RPAEngine } from '@/core/engine/RPAEngine';
 import type { APIResponse, JobStatusResponse, JobUpdateRequest } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize RPA Engine (singleton pattern)
 let rpaEngine: RPAEngine;
 function getRPAEngine(): RPAEngine {

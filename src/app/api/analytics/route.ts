@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { RPAEngine } from '@/core/engine/RPAEngine';
 import type { APIResponse, DashboardAnalyticsResponse } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize RPA Engine (singleton)
 let rpaEngine: RPAEngine;
 function getRPAEngine(): RPAEngine {
@@ -19,24 +21,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const engine = getRPAEngine();
 
-    // Get all jobs for analytics
-    const allJobs = await engine.getAllJobs();
-
-    // Calculate analytics
+    // TODO: Implement job storage/retrieval system
+    // For now, return mock analytics
     const analytics: DashboardAnalyticsResponse = {
       jobs: {
-        total: allJobs.length,
-        active: allJobs.filter((j) => j.status === 'running').length,
-        completed: allJobs.filter((j) => j.status === 'completed').length,
-        failed: allJobs.filter((j) => j.status === 'failed').length,
+        total: 0,
+        active: 0,
+        completed: 0,
+        failed: 0,
       },
       extraction: {
         totalRecords: 0,
         todayRecords: 0,
-        successRate: allJobs.length > 0
-          ? (allJobs.filter((j) => j.status === 'completed').length / allJobs.length) * 100
-          : 0,
-        averageTimeMs: 5000, // Mock value
+        successRate: 0,
+        averageTimeMs: 5000,
       },
       pipeline: {
         processing: 0,

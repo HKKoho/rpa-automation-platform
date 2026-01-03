@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ETLPipeline } from '@/core/pipeline/ETLPipeline';
 import type { APIResponse, PipelineProcessRequest } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize ETL Pipeline (singleton)
 let etlPipeline: ETLPipeline;
 function getETLPipeline(): ETLPipeline {

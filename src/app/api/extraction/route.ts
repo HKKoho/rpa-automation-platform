@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { RPAEngine } from '@/core/engine/RPAEngine';
 import type { APIResponse, ExtractionTriggerRequest, ExtractionDataResponse } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize RPA Engine (singleton)
 let rpaEngine: RPAEngine;
 function getRPAEngine(): RPAEngine {
@@ -48,8 +50,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         selectors: body.selectors,
         accountIdentifiers: [],
       },
-      credentialId: body.credentialId,
-      method: body.extractionMethod,
+      url: body.source.url || body.source.apiEndpoint || '',
+      credentials: {
+        vaultId: body.credentialId,
+      },
+      selectors: body.selectors,
     };
 
     // Trigger extraction

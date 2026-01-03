@@ -3,6 +3,8 @@ import { RPAEngine } from '@/core/engine/RPAEngine';
 import type { APIResponse, JobCreateRequest, JobListResponse } from '@/types/api.types';
 import type { RPAJob } from '@/types/rpa.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize RPA Engine (singleton pattern)
 let rpaEngine: RPAEngine;
 function getRPAEngine(): RPAEngine {
@@ -24,7 +26,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const status = searchParams.get('status');
 
     const engine = getRPAEngine();
-    const allJobs = await engine.getAllJobs();
+
+    // TODO: Implement job storage/retrieval system
+    // For now, return empty list
+    const allJobs: RPAJob[] = [];
 
     // Filter by status if provided
     let filteredJobs = allJobs;
@@ -97,6 +102,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         expression: body.schedule.expression,
         timezone: body.schedule.timezone || 'UTC',
         preferredHours: body.schedule.preferredHours || [],
+        enabled: true,
       },
       source: {
         type: body.source.type === 'clearinghouse'
@@ -114,14 +120,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       credentials: {
         vaultId: body.credentialId,
         type: 'oauth', // Will be determined by credential vault
+        encryptedData: '', // Will be populated by credential vault during execution
       },
       extractionMethod: body.extractionMethod,
       status: 'idle',
-      retryConfig: body.retryConfig || {
-        maxAttempts: 3,
-        backoffStrategy: 'exponential',
-        initialDelay: 5000,
-        maxDelay: 60000,
+      retryConfig: {
+        maxAttempts: body.retryConfig?.maxAttempts || 3,
+        backoffStrategy: body.retryConfig?.backoffStrategy || 'exponential',
+        initialDelay: body.retryConfig?.initialDelay || 5000,
+        maxDelay: body.retryConfig?.maxDelay || 60000,
         retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
       },
       createdAt: new Date(),

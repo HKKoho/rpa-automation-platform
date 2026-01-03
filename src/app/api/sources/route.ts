@@ -7,6 +7,8 @@ import {
 } from '@/config/bankingNetworks';
 import type { APIResponse } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/sources
  * Get all banking network sources or filter by type

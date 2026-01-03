@@ -22,7 +22,8 @@
       "@/lib/*": ["./src/lib/*"],
       "@/types/*": ["./src/types/*"],
       "@/core/*": ["./src/core/*"],
-      "@/services/*": ["./src/services/*"]
+      "@/services/*": ["./src/services/*"],
+      "@/config/*": ["./config/*"]
     },
     "plugins": [
       {

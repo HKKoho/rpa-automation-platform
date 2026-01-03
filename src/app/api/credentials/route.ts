@@ -7,6 +7,8 @@ import type {
   CredentialListResponse,
 } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize Credential Vault (singleton pattern)
 let credentialVault: CredentialVault;
 function getCredentialVault(): CredentialVault {
@@ -23,7 +25,7 @@ function getCredentialVault(): CredentialVault {
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const vault = getCredentialVault();
-    const allCredentials = await vault.listAll();
+    const allCredentials = await vault.list();
 
     // Map to response format with calculated fields
     const credentials: CredentialResponse[] = allCredentials.map((cred) => {
@@ -34,7 +36,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return {
         id: cred.id,
         type: cred.type as any,
-        metadata: cred.metadata,
+        metadata: {
+          description: cred.description,
+          tags: cred.tags,
+        },
         createdAt: cred.createdAt,
         expiresAt: cred.expiresAt,
         rotationPolicy: cred.rotationPolicy,
@@ -98,15 +103,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Generate credential ID
     const credentialId = `cred-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
-    // Store credential
-    await vault.store(credentialId, body.data, {
+    // Merge type with data to match CredentialData interface
+    const credentialData = {
       type: body.type,
+      ...body.data,
+    };
+
+    // Store credential
+    await vault.store(credentialId, credentialData as any, {
       expiresAt: body.expiresAt,
       rotationPolicy: body.rotationPolicy || 'manual',
-      metadata: body.metadata || {
-        description: '',
-        tags: [],
-      },
+      description: body.metadata?.description || '',
+      tags: body.metadata?.tags || [],
     });
 
     const response: APIResponse<{ credentialId: string }> = {

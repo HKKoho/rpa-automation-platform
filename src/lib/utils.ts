@@ -316,7 +316,6 @@ export function getStatusColor(status: string): {
     completed: { bg: 'bg-green-100', text: 'text-green-700', badge: 'badge-success' },
     success: { bg: 'bg-green-100', text: 'text-green-700', badge: 'badge-success' },
     failed: { bg: 'bg-red-100', text: 'text-red-700', badge: 'badge-danger' },
-    failed: { bg: 'bg-red-100', text: 'text-red-700', badge: 'badge-danger' },
     paused: { bg: 'bg-gray-100', text: 'text-gray-700', badge: 'badge-info' },
     cancelled: { bg: 'bg-gray-100', text: 'text-gray-700', badge: 'badge-info' },
     pending: { bg: 'bg-yellow-100', text: 'text-yellow-700', badge: 'badge-warning' },

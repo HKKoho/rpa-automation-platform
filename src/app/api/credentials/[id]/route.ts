@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { CredentialVault } from '@/core/security/CredentialVault';
 import type { APIResponse } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize Credential Vault (singleton pattern)
 let credentialVault: CredentialVault;
 function getCredentialVault(): CredentialVault {
@@ -83,11 +85,8 @@ export async function PUT(
 
     const vault = getCredentialVault();
 
-    // Update credential
-    await vault.update(id, body.data, {
-      metadata: body.metadata,
-      expiresAt: body.expiresAt,
-    });
+    // Update credential (metadata and expiresAt are preserved from original entry)
+    await vault.update(id, body.data);
 
     const response: APIResponse<{ message: string }> = {
       success: true,

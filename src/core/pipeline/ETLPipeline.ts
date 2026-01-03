@@ -52,7 +52,7 @@ export class ETLPipeline extends EventEmitter {
         action: 'etl.validation.completed',
         resource: 'etl-job',
         resourceId: etlJob.id,
-        details: {
+        changes: {
           errors: validationResult.errors.length,
           warnings: validationResult.warnings.length,
         },
@@ -71,7 +71,7 @@ export class ETLPipeline extends EventEmitter {
         action: 'etl.transformation.completed',
         resource: 'etl-job',
         resourceId: etlJob.id,
-        details: {
+        changes: {
           recordsTransformed: transformedData.length,
         },
       });
@@ -94,7 +94,7 @@ export class ETLPipeline extends EventEmitter {
         action: 'etl.pipeline.completed',
         resource: 'etl-job',
         resourceId: etlJob.id,
-        details: {
+        changes: {
           recordsProcessed: etlJob.recordsProcessed,
           errorCount: etlJob.errorCount,
           duration: etlJob.completedAt.getTime() - etlJob.startedAt!.getTime(),
@@ -111,7 +111,7 @@ export class ETLPipeline extends EventEmitter {
         action: 'etl.pipeline.failed',
         resource: 'etl-job',
         resourceId: etlJob.id,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
 
       this.emit('pipeline:failed', { jobId: etlJob.id, error });

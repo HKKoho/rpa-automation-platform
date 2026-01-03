@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuditLogger } from '@/core/security/AuditLogger';
 import type { APIResponse, AuditLogQueryRequest, AuditLogQueryResponse } from '@/types/api.types';
 
+export const dynamic = 'force-dynamic';
+
 // Initialize Audit Logger (singleton)
 let auditLogger: AuditLogger;
 function getAuditLogger(): AuditLogger {

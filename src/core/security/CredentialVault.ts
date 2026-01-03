@@ -51,7 +51,7 @@ export class CredentialVault {
         action: 'credential.stored',
         resource: 'credential-vault',
         resourceId: id,
-        details: {
+        changes: {
           type: credentials.type,
           rotationPolicy: vaultEntry.rotationPolicy,
         },
@@ -61,7 +61,7 @@ export class CredentialVault {
         action: 'credential.store.failed',
         resource: 'credential-vault',
         resourceId: id,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -103,7 +103,7 @@ export class CredentialVault {
         action: 'credential.retrieve.failed',
         resource: 'credential-vault',
         resourceId: id,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -142,7 +142,7 @@ export class CredentialVault {
         action: 'credential.update.failed',
         resource: 'credential-vault',
         resourceId: id,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -182,7 +182,7 @@ export class CredentialVault {
         action: 'credential.delete.failed',
         resource: 'credential-vault',
         resourceId: id,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -246,7 +246,7 @@ export class CredentialVault {
         action: 'credential.rotation.needed',
         resource: 'credential-vault',
         resourceId: id,
-        details: {
+        changes: {
           policy: entry.rotationPolicy,
           daysSinceRotation,
         },

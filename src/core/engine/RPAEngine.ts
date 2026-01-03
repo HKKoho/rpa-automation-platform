@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import { Queue, Worker } from 'bullmq';
-import { RPAJob, ExtractedData, ExtractionParams } from '@/types/rpa.types';
+import { RPAJob, ExtractedData } from '@/types/rpa.types';
 import { WebAutomation } from '../extraction/WebAutomation';
 import { APIExtractor } from '../extraction/APIExtractor';
 import { QueueManager } from './QueueManager';
@@ -36,11 +36,12 @@ export class RPAEngine extends EventEmitter {
         action: 'job.schedule',
         resource: 'rpa-job',
         resourceId: jobConfig.id,
-        details: { name: jobConfig.name, schedule: jobConfig.schedule }
+        changes: { name: jobConfig.name, schedule: jobConfig.schedule }
       });
 
       // Add job to queue
       const job = await this.queueManager.addJob(
+        'rpa-jobs',
         jobConfig.name,
         jobConfig,
         {
@@ -65,7 +66,7 @@ export class RPAEngine extends EventEmitter {
         action: 'job.schedule.failed',
         resource: 'rpa-job',
         resourceId: jobConfig.id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        errorMessage: error instanceof Error ? error.message : 'Unknown error'
       });
       throw error;
     }
@@ -100,7 +101,7 @@ export class RPAEngine extends EventEmitter {
         action: 'data.extraction.success',
         resource: 'extracted-data',
         resourceId: data.jobId,
-        details: {
+        changes: {
           duration,
           recordCount: data.metadata.recordCount,
           dataSize: data.dataSize
@@ -116,8 +117,8 @@ export class RPAEngine extends EventEmitter {
         action: 'data.extraction.failed',
         resource: 'extracted-data',
         resourceId: params.jobId,
-        error: error instanceof Error ? error.message : 'Unknown error',
-        details: { duration }
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
+        changes: { duration }
       });
 
       this.emit('extraction:failed', { jobId: params.jobId, error });
