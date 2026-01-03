@@ -23,7 +23,7 @@ export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-2 flex-wrap">
+    <nav className="flex gap-2 flex-wrap justify-center">
       {navItems.map((item) => {
         const isActive = pathname === item.href;
 
