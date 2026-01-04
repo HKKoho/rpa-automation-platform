@@ -138,3 +138,9 @@ dump.rdb
 *.db-journal
 *.db-shm
 *.db-wal
+
+# Local development files (full implementation with incompatible Vercel packages)
+*.local.ts
+*.local.tsx
+*.local.js
+package.local.json

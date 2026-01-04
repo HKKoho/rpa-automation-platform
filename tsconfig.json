@@ -41,6 +41,8 @@
     "node_modules",
     ".next",
     "out",
-    "dist"
+    "dist",
+    "**/*.local.ts",
+    "**/*.local.tsx"
   ]
 }

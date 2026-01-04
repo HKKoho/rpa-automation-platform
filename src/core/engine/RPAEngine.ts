@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Queue, Worker } from 'bullmq';
+// Vercel stub: bullmq removed (see QueueManager.ts for stub implementation)
 import { RPAJob, ExtractedData } from '@/types/rpa.types';
 import { WebAutomation } from '../extraction/WebAutomation';
 import { APIExtractor } from '../extraction/APIExtractor';
