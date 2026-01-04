@@ -8,12 +8,12 @@ export default function HomePage() {
           <div className="stat-label">Automation</div>
         </div>
         <div className="stat-card">
-          <div className="stat-number">3-Layer</div>
-          <div className="stat-label">Architecture</div>
+          <div className="stat-number">4-Layer</div>
+          <div className="stat-label">AI Architecture</div>
         </div>
         <div className="stat-card">
-          <div className="stat-number">AI-Powered</div>
-          <div className="stat-label">Extraction</div>
+          <div className="stat-number">Hybrid AI</div>
+          <div className="stat-label">CV + GenAI</div>
         </div>
         <div className="stat-card">
           <div className="stat-number">Enterprise</div>
@@ -62,22 +62,22 @@ export default function HomePage() {
 
           <div className="feature-card">
             <div className="feature-icon">🧠</div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800">AI Integration</h3>
+            <h3 className="text-xl font-bold mb-3 text-gray-800">Hybrid AI Integration</h3>
             <p className="text-gray-600 text-sm mb-4">
-              TensorFlow.js powered computer vision for layout analysis, pattern recognition, and adaptive element detection
+              Combines TensorFlow.js computer vision with generative AI (GPT-4, Gemini, DeepSeek) for intelligent automation
             </p>
             <ul className="text-sm text-gray-600 space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-green-600">✓</span>
-                <span>OCR & text extraction</span>
+                <span>Adaptive selector recovery</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-600">✓</span>
-                <span>Pattern learning & adaptation</span>
+                <span>Smart data normalization</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-600">✓</span>
-                <span>CAPTCHA solving</span>
+                <span>Natural language interface</span>
               </li>
             </ul>
           </div>
@@ -109,21 +109,40 @@ export default function HomePage() {
       {/* Technology Stack */}
       <div className="card-glass mb-8">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">⚙️ Technology Stack</h2>
-        <div className="flex flex-wrap gap-3">
-          <span className="tech-tag">TypeScript</span>
-          <span className="tech-tag">Next.js 14</span>
-          <span className="tech-tag">React</span>
-          <span className="tech-tag">Node.js</span>
-          <span className="tech-tag">Puppeteer</span>
-          <span className="tech-tag">Playwright</span>
-          <span className="tech-tag">TensorFlow.js</span>
-          <span className="tech-tag">BullMQ</span>
-          <span className="tech-tag">Redis</span>
-          <span className="tech-tag">PostgreSQL</span>
-          <span className="tech-tag">Docker</span>
-          <span className="tech-tag">Kubernetes</span>
-          <span className="tech-tag">Google Cloud</span>
-          <span className="tech-tag">TailwindCSS</span>
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Core Technologies</h3>
+            <div className="flex flex-wrap gap-3">
+              <span className="tech-tag">TypeScript</span>
+              <span className="tech-tag">Next.js 14</span>
+              <span className="tech-tag">React</span>
+              <span className="tech-tag">Node.js</span>
+              <span className="tech-tag">Puppeteer</span>
+              <span className="tech-tag">Playwright</span>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">AI & Machine Learning</h3>
+            <div className="flex flex-wrap gap-3">
+              <span className="tech-tag bg-purple-100 text-purple-700">TensorFlow.js</span>
+              <span className="tech-tag bg-purple-100 text-purple-700">OpenAI GPT-4</span>
+              <span className="tech-tag bg-purple-100 text-purple-700">Google Gemini</span>
+              <span className="tech-tag bg-purple-100 text-purple-700">DeepSeek</span>
+              <span className="tech-tag bg-purple-100 text-purple-700">Local Llama 3</span>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Infrastructure</h3>
+            <div className="flex flex-wrap gap-3">
+              <span className="tech-tag">BullMQ</span>
+              <span className="tech-tag">Redis</span>
+              <span className="tech-tag">PostgreSQL</span>
+              <span className="tech-tag">BigQuery</span>
+              <span className="tech-tag">Docker</span>
+              <span className="tech-tag">Kubernetes</span>
+              <span className="tech-tag">Google Cloud</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -231,7 +250,7 @@ export default function HomePage() {
             <div className="space-y-3 text-sm">
               <div className="p-3 bg-gray-50 rounded-lg">
                 <div className="font-medium text-gray-700 mb-1">Version</div>
-                <div className="text-gray-600">1.0.0</div>
+                <div className="text-gray-600">2.0.0 (AI-Enhanced)</div>
               </div>
               <div className="p-3 bg-gray-50 rounded-lg">
                 <div className="font-medium text-gray-700 mb-1">Environment</div>

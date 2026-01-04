@@ -50,14 +50,67 @@ export default function SetupPage() {
           </div>
         </div>
 
+        {/* AI Configuration (NEW in v2.0.0) */}
+        <div className="bg-purple-50 shadow-lg rounded-lg p-6 mb-8 border-2 border-purple-300">
+          <h2 className="text-2xl font-bold text-purple-700 mb-4">🧠 AI Configuration (Optional - Professional+ Tiers)</h2>
+          <p className="text-gray-700 mb-4">
+            Enable generative AI features for adaptive automation and intelligent data processing
+          </p>
+          <div className="bg-white p-4 rounded mb-4">
+            <h3 className="text-gray-800 font-semibold mb-3">Environment Variables</h3>
+            <code className="block text-xs bg-gray-100 p-4 rounded text-green-700 whitespace-pre">
+{`# Enable AI Features (Professional+ tiers)
+ENABLE_AI_FEATURES=true
+
+# AI Provider (choose one: openai, gemini, deepseek, local)
+AI_PROVIDER=deepseek
+
+# API Keys (based on provider)
+OPENAI_API_KEY=sk-...                # For OpenAI GPT-4
+GEMINI_API_KEY=AIza...               # For Google Gemini
+DEEPSEEK_API_KEY=ds-...              # For DeepSeek (recommended)
+LOCAL_LLM_ENDPOINT=http://localhost:8000  # For local Llama 3
+
+# AI Configuration
+AI_DATA_MASKING=true                 # Mask PII before AI calls (recommended)
+AI_MAX_CALLS_PER_DAY=1000           # Rate limit for AI calls`}
+            </code>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4 mb-4">
+            <div className="bg-blue-100 p-4 rounded">
+              <div className="font-bold text-blue-800 mb-2">DeepSeek (Recommended)</div>
+              <div className="text-sm text-gray-700">Cost-effective: $0.14/1M tokens</div>
+              <div className="text-xs text-gray-600 mt-1">Best for: General automation</div>
+            </div>
+            <div className="bg-green-100 p-4 rounded">
+              <div className="font-bold text-green-800 mb-2">Google Gemini</div>
+              <div className="text-sm text-gray-700">Multimodal: $0.075/1M tokens</div>
+              <div className="text-xs text-gray-600 mt-1">Best for: Document extraction</div>
+            </div>
+            <div className="bg-purple-100 p-4 rounded">
+              <div className="font-bold text-purple-800 mb-2">OpenAI GPT-4</div>
+              <div className="text-sm text-gray-700">Premium: $2.50/1M tokens</div>
+              <div className="text-xs text-gray-600 mt-1">Best for: Complex reasoning</div>
+            </div>
+          </div>
+          <div className="bg-yellow-100 p-3 rounded border border-yellow-300">
+            <div className="text-sm text-gray-800">
+              <strong>🔒 Security Note:</strong> For banking compliance, enable <code>AI_DATA_MASKING=true</code> to strip PII before AI processing.
+              Enterprise+ tier supports on-premise local LLMs for air-gapped environments.
+            </div>
+          </div>
+        </div>
+
         {/* Architecture */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Architecture Overview</h2>
           <div className="bg-blue-50 shadow-lg rounded-lg p-6 border border-blue-200">
             <pre className="text-sm text-gray-700 overflow-x-auto">
-{`Banking Networks → RPA Engine → ETL Pipeline → BigQuery
-                                                    ↓
-                                           Power BI Dashboards`}
+{`Banking Networks → RPA Engine (AI-Assisted) → ETL Pipeline (AI Normalization) → BigQuery
+                                                                                      ↓
+                                   AI Services Layer                        Power BI Dashboards
+                          (Adaptive Selectors, Error Recovery,
+                           Data Normalization, Doc Understanding)`}
             </pre>
           </div>
         </section>

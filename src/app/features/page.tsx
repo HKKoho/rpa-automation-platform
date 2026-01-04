@@ -81,12 +81,12 @@ export default function FeaturesPage() {
           </ul>
         </div>
 
-        {/* AI-Powered Extraction */}
+        {/* Computer Vision AI */}
         <div className="feature-card">
-          <div className="feature-icon">🧠</div>
-          <h3 className="text-xl font-bold mb-3 text-gray-800">AI Integration</h3>
+          <div className="feature-icon">👁️</div>
+          <h3 className="text-xl font-bold mb-3 text-gray-800">Computer Vision AI (TensorFlow.js)</h3>
           <p className="text-gray-600 text-sm mb-4">
-            TensorFlow.js powered computer vision for intelligent data extraction
+            Local AI-powered computer vision for fast, zero-latency data extraction
           </p>
           <ul className="text-sm text-gray-600 space-y-2">
             <li className="flex items-start gap-2">
@@ -99,10 +99,6 @@ export default function FeaturesPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span>Adaptive element detection that learns from failures</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-green-600">✓</span>
               <span>Table structure detection and data extraction</span>
             </li>
             <li className="flex items-start gap-2">
@@ -111,7 +107,46 @@ export default function FeaturesPage() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-green-600">✓</span>
-              <span>Anomaly detection for data quality monitoring</span>
+              <span>Local processing - no external API calls</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-600">✓</span>
+              <span>Available in all tiers</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Generative AI */}
+        <div className="feature-card">
+          <div className="feature-icon">🧠</div>
+          <h3 className="text-xl font-bold mb-3 text-gray-800">Generative AI (Professional+ Tiers)</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Advanced LLM-powered automation with GPT-4, Gemini, DeepSeek, or local models
+          </p>
+          <ul className="text-sm text-gray-600 space-y-2">
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Adaptive selector recovery when portals change</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Smart data normalization for inconsistent formats</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Error interpretation and auto-recovery suggestions</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Document understanding (PDFs, invoices, statements)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Natural language job creation interface</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-purple-600">⚡</span>
+              <span>Context-aware validation and anomaly detection</span>
             </li>
           </ul>
         </div>

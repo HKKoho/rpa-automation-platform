@@ -21,6 +21,7 @@ export default function PricingPage() {
       support: 'Community',
       features: [
         'Internal automation only',
+        'AI: TensorFlow.js vision only (local)',
         'PostgreSQL analytics',
         'Basic dashboards',
         '99% uptime SLA',
@@ -40,6 +41,7 @@ export default function PricingPage() {
       support: '8x5 Email',
       features: [
         'Robocorp Cloud (10K runs)',
+        'AI: Data normalization (1K calls/mo, DeepSeek)',
         'BigQuery warehouse (1TB)',
         'Power BI Pro (5 users)',
         '99.5% uptime SLA',
@@ -61,6 +63,8 @@ export default function PricingPage() {
       support: '24/7 Priority',
       features: [
         'UiPath (5 robots) + Robocorp (50K)',
+        'AI: Full suite (unlimited, GPT-4/Gemini/DeepSeek)',
+        'AI: Adaptive selectors, NL interface, doc understanding',
         'BigQuery Enterprise (10TB)',
         'Power BI Premium',
         '99.9% uptime SLA',
@@ -83,6 +87,8 @@ export default function PricingPage() {
       support: '24/7 NOC + Custom Dev',
       features: [
         'UiPath (25 robots) + Robocorp (500K)',
+        'AI: Custom models, fine-tuning, on-premise deployment',
+        'AI: Air-gapped local LLM infrastructure',
         'Multi-tenant architecture',
         'White-label capabilities',
         'BigQuery Enterprise (100TB)',
