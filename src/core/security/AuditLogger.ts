@@ -1,21 +1,29 @@
 import { AuditLogEntry } from '@/types/rpa.types';
+import { BigQueryClient } from '@/core/warehouse/BigQueryClient';
 import fs from 'fs/promises';
 import path from 'path';
 
 /**
  * Immutable Audit Logger for Compliance and Security
  * Provides tamper-proof logging for banking operations
+ *
+ * Dual-write architecture:
+ * - JSONL files (append-only, immutable, local audit trail)
+ * - BigQuery warehouse (real-time analytics, Power BI reporting)
  */
 export class AuditLogger {
   private logDir: string;
   private currentLogFile: string;
   private logBuffer: AuditLogEntry[] = [];
+  private bqBuffer: AuditLogEntry[] = [];
   private bufferSize: number = 100;
   private flushInterval: NodeJS.Timeout | null = null;
+  private bigQueryClient: BigQueryClient;
 
   constructor(logDir?: string) {
     this.logDir = logDir || process.env.AUDIT_LOG_DIR || './logs/audit';
     this.currentLogFile = this.getLogFileName();
+    this.bigQueryClient = new BigQueryClient();
     this.initializeLogger();
   }
 
@@ -37,7 +45,7 @@ export class AuditLogger {
   }
 
   /**
-   * Log an audit event
+   * Log an audit event (dual-write to JSONL and BigQuery)
    */
   async log(entry: Partial<AuditLogEntry>): Promise<void> {
     const auditEntry: AuditLogEntry = {
@@ -54,12 +62,20 @@ export class AuditLogger {
       errorMessage: entry.errorMessage,
     };
 
-    // Add to buffer
+    // Add to file buffer
     this.logBuffer.push(auditEntry);
 
-    // Flush if buffer is full
+    // Add to BigQuery buffer
+    this.bqBuffer.push(auditEntry);
+
+    // Flush file buffer if full
     if (this.logBuffer.length >= this.bufferSize) {
       await this.flush();
+    }
+
+    // Flush BigQuery buffer if full
+    if (this.bqBuffer.length >= 100) {
+      await this.flushToBigQuery();
     }
 
     // Also log to console in development
@@ -280,13 +296,51 @@ export class AuditLogger {
   }
 
   /**
-   * Graceful shutdown
+   * Flush audit logs to BigQuery
+   */
+  private async flushToBigQuery(): Promise<void> {
+    if (this.bqBuffer.length === 0) return;
+
+    try {
+      const rows = this.bqBuffer.map((entry) => ({
+        audit_id: entry.id,
+        user_id: entry.userId,
+        action: entry.action,
+        resource: entry.resource,
+        resource_id: entry.resourceId,
+        result: entry.result,
+        timestamp: entry.timestamp.toISOString(),
+        log_date: entry.timestamp.toISOString().split('T')[0],
+        ip_address: entry.ipAddress,
+        user_agent: entry.userAgent,
+        changes: JSON.stringify(entry.changes || {}),
+        error_message: entry.errorMessage || null,
+        session_id: null, // TODO: Track session IDs
+        compliance_mode: process.env.COMPLIANCE_MODE || null,
+      }));
+
+      await this.bigQueryClient.streamInsert('fact_audit_logs', rows);
+      console.log(`[AuditLogger] Flushed ${rows.length} audit logs to BigQuery`);
+
+      // Clear BigQuery buffer
+      this.bqBuffer = [];
+    } catch (error) {
+      console.error('[AuditLogger] Failed to flush audit logs to BigQuery:', error);
+      // Keep logs in buffer for retry on next flush
+      // Don't throw - file-based audit trail is still intact
+    }
+  }
+
+  /**
+   * Graceful shutdown (flush both file and BigQuery buffers)
    */
   async shutdown(): Promise<void> {
     if (this.flushInterval) {
       clearInterval(this.flushInterval);
     }
-    await this.flush();
+    // Flush both buffers
+    await this.flush(); // File buffer
+    await this.flushToBigQuery(); // BigQuery buffer
   }
 }
 

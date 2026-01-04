@@ -101,6 +101,9 @@ export class ETLPipeline extends EventEmitter {
         },
       });
 
+      // Persist ETL job metadata to warehouse
+      await this.storage.loadETLJob(etlJob);
+
       this.emit('pipeline:completed', etlJob);
       return etlJob;
     } catch (error) {
@@ -113,6 +116,9 @@ export class ETLPipeline extends EventEmitter {
         resourceId: etlJob.id,
         errorMessage: error instanceof Error ? error.message : 'Unknown error',
       });
+
+      // Persist failed ETL job metadata to warehouse
+      await this.storage.loadETLJob(etlJob);
 
       this.emit('pipeline:failed', { jobId: etlJob.id, error });
       throw error;

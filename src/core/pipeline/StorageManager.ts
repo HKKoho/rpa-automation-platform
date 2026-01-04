@@ -1,8 +1,16 @@
+import { BigQueryClient } from '@/core/warehouse/BigQueryClient';
+import { BankingTransaction, AuditLogEntry, ETLJob } from '@/types/rpa.types';
+
 /**
  * Storage Manager for Banking Data Warehouse Operations
  * Handles loading transformed data into various destinations
  */
 export class StorageManager {
+  private bigQueryClient: BigQueryClient;
+
+  constructor() {
+    this.bigQueryClient = new BigQueryClient();
+  }
   /**
    * Load data into specified destination
    */
@@ -14,8 +22,9 @@ export class StorageManager {
     try {
       switch (options.destination) {
         case 'warehouse':
-          await this.loadToWarehouse(data, options);
-          recordsLoaded = data.length;
+          const warehouseResult = await this.loadToWarehouse(data, options);
+          recordsLoaded = warehouseResult.inserted;
+          errors = warehouseResult.failed;
           break;
 
         case 'database':
@@ -52,22 +61,78 @@ export class StorageManager {
   }
 
   /**
-   * Load data to data warehouse (BigQuery, Snowflake, etc.)
+   * Load data to BigQuery data warehouse
    */
   private async loadToWarehouse(
     data: any[],
     options: LoadOptions
-  ): Promise<void> {
-    // Mock implementation - in production, use BigQuery, Snowflake SDK
-    console.log(`Loading ${data.length} records to warehouse...`);
+  ): Promise<{ inserted: number; failed: number }> {
+    const startTime = Date.now();
+    const tableName = options.tableName || 'fact_banking_transactions';
+    const batchSize = options.batchSize || 500;
 
-    const batchSize = options.batchSize || 1000;
+    console.log(`[StorageManager] Loading ${data.length} records to BigQuery warehouse (${tableName})...`);
 
-    for (let i = 0; i < data.length; i += batchSize) {
-      const batch = data.slice(i, i + batchSize);
+    // Transform data to BigQuery schema
+    const rows = this.transformToBigQuerySchema(data, tableName);
 
-      // Simulate batch insert
-      await this.simulateWarehouseInsert(batch);
+    // Batch insert with retry logic
+    const result = await this.bigQueryClient.batchInsert(tableName, rows, batchSize);
+
+    console.log(`[StorageManager] Warehouse load completed: ${result.inserted} inserted, ${result.failed} failed (${Date.now() - startTime}ms)`);
+
+    return result;
+  }
+
+  /**
+   * Transform application data to BigQuery schema
+   */
+  private transformToBigQuerySchema(data: any[], tableName: string): any[] {
+    switch (tableName) {
+      case 'fact_banking_transactions':
+        return data.map((tx: any) => ({
+          transaction_id: tx.transactionId || tx.transaction_id,
+          account_number: tx.accountNumber || tx.account_number,
+          amount: tx.amount,
+          currency: tx.currency,
+          transaction_type: tx.transactionType || tx.transaction_type,
+          status: tx.status,
+          transaction_timestamp: (tx.timestamp instanceof Date ? tx.timestamp : new Date(tx.timestamp)).toISOString(),
+          transaction_date: (tx.timestamp instanceof Date ? tx.timestamp : new Date(tx.timestamp)).toISOString().split('T')[0],
+          created_at: new Date().toISOString(),
+          job_id: tx.jobId || tx.job_id || null,
+          source_bank_id: tx.sourceBank || tx.source_bank_id || null,
+          destination_bank_id: tx.destinationBank || tx.destination_bank_id || null,
+          clearinghouse_id: tx.clearinghouseId || tx.clearinghouse_id || null,
+          clearinghouse_reference: tx.clearinghouseReference || tx.clearinghouse_reference || null,
+          metadata: JSON.stringify(tx.metadata || {}),
+          extraction_job_id: tx.extractionJobId || tx.extraction_job_id || null,
+          etl_job_id: tx.etlJobId || tx.etl_job_id || null,
+          validation_status: tx.validationStatus || tx.validation_status || null,
+          data_quality_score: tx.dataQualityScore || tx.data_quality_score || null,
+        }));
+
+      case 'fact_audit_logs':
+        return data.map((log: any) => ({
+          audit_id: log.id || log.audit_id,
+          user_id: log.userId || log.user_id,
+          action: log.action,
+          resource: log.resource,
+          resource_id: log.resourceId || log.resource_id,
+          result: log.result,
+          timestamp: (log.timestamp instanceof Date ? log.timestamp : new Date(log.timestamp)).toISOString(),
+          log_date: (log.timestamp instanceof Date ? log.timestamp : new Date(log.timestamp)).toISOString().split('T')[0],
+          ip_address: log.ipAddress || log.ip_address || null,
+          user_agent: log.userAgent || log.user_agent || null,
+          changes: JSON.stringify(log.changes || {}),
+          error_message: log.errorMessage || log.error_message || null,
+          session_id: log.sessionId || log.session_id || null,
+          compliance_mode: log.complianceMode || log.compliance_mode || null,
+        }));
+
+      default:
+        // Pass through for other tables
+        return data;
     }
   }
 
@@ -150,10 +215,73 @@ export class StorageManager {
   }
 
   /**
-   * Simulate warehouse insert operation
+   * Load job execution metadata to warehouse
    */
-  private async simulateWarehouseInsert(batch: any[]): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 100));
+  async loadJobExecution(execution: JobExecutionMetadata): Promise<void> {
+    try {
+      await this.bigQueryClient.streamInsert('fact_job_executions', [
+        {
+          execution_id: execution.executionId,
+          job_id: execution.jobId,
+          banking_network_id: execution.bankingNetworkId || null,
+          status: execution.status,
+          extraction_method: execution.extractionMethod,
+          started_at: execution.startedAt.toISOString(),
+          completed_at: execution.completedAt?.toISOString() || null,
+          execution_date: execution.startedAt.toISOString().split('T')[0],
+          duration_ms: execution.durationMs || null,
+          records_extracted: execution.recordsExtracted || null,
+          records_processed: execution.recordsProcessed || null,
+          error_count: execution.errorCount || null,
+          data_size_bytes: execution.dataSizeBytes || null,
+          error_message: execution.errorMessage || null,
+          error_code: execution.errorCode || null,
+          retry_attempt: execution.retryAttempt || null,
+          extraction_duration_ms: execution.extractionDurationMs || null,
+          validation_duration_ms: execution.validationDurationMs || null,
+          transformation_duration_ms: execution.transformationDurationMs || null,
+          load_duration_ms: execution.loadDurationMs || null,
+        },
+      ]);
+
+      console.log(`[StorageManager] Job execution metadata persisted: ${execution.executionId}`);
+    } catch (error) {
+      console.error('[StorageManager] Failed to persist job execution:', error);
+      // Don't throw - metadata persistence failure shouldn't break the pipeline
+    }
+  }
+
+  /**
+   * Load ETL job metadata to warehouse
+   */
+  async loadETLJob(etlJob: ETLJob): Promise<void> {
+    try {
+      await this.bigQueryClient.streamInsert('fact_etl_pipeline_jobs', [
+        {
+          etl_job_id: etlJob.id,
+          extraction_job_id: etlJob.extractionJobId,
+          stage: etlJob.stage,
+          status: etlJob.status,
+          started_at: etlJob.startedAt?.toISOString() || null,
+          completed_at: etlJob.completedAt?.toISOString() || null,
+          execution_date: (etlJob.startedAt || new Date()).toISOString().split('T')[0],
+          duration_ms:
+            etlJob.completedAt && etlJob.startedAt
+              ? etlJob.completedAt.getTime() - etlJob.startedAt.getTime()
+              : null,
+          records_processed: etlJob.recordsProcessed || null,
+          error_count: etlJob.errorCount || null,
+          warning_count: 0, // TODO: Track warnings in ETLJob type
+          validation_errors: JSON.stringify({}), // TODO: Add validation errors to ETLJob
+          transformation_rules_applied: JSON.stringify({}), // TODO: Track transformation rules
+        },
+      ]);
+
+      console.log(`[StorageManager] ETL job metadata persisted: ${etlJob.id}`);
+    } catch (error) {
+      console.error('[StorageManager] Failed to persist ETL job:', error);
+      // Don't throw - metadata persistence failure shouldn't break the pipeline
+    }
   }
 
   /**
@@ -259,4 +387,26 @@ export interface LoadResult {
   errors: number;
   duration: number;
   destination: string;
+}
+
+export interface JobExecutionMetadata {
+  executionId: string;
+  jobId: string;
+  bankingNetworkId?: string;
+  status: string;
+  extractionMethod: string;
+  startedAt: Date;
+  completedAt?: Date;
+  durationMs?: number;
+  recordsExtracted?: number;
+  recordsProcessed?: number;
+  errorCount?: number;
+  dataSizeBytes?: number;
+  errorMessage?: string;
+  errorCode?: string;
+  retryAttempt?: number;
+  extractionDurationMs?: number;
+  validationDurationMs?: number;
+  transformationDurationMs?: number;
+  loadDurationMs?: number;
 }

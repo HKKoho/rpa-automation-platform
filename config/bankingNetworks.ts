@@ -1,6 +1,14 @@
 /**
  * Banking Network Sources Configuration
  * Defines all supported banking network data sources for the RPA platform
+ *
+ * NOTE: The following networks are reserved for future technical development:
+ * - ACH_NACHA (ach-nacha) - Automated Clearing House (NACHA)
+ * - SWIFT (swift) - Society for Worldwide Interbank Financial Telecommunication
+ * - FedWire (fedwire) - Federal Reserve Wire Network
+ * - CHIPS (chips) - Clearing House Interbank Payments System
+ *
+ * These clearinghouse networks will be activated upon completion of technical integration.
  */
 
 export interface BankingNetworkSource {
@@ -316,13 +324,20 @@ export const BANKING_NETWORKS = {
 /**
  * Helper Functions
  */
+
+// Networks reserved for future technical development
+const FUTURE_NETWORKS = ['ach-nacha', 'swift', 'fedwire', 'chips'];
+
 export function getAllBankingNetworks(): BankingNetworkSource[] {
-  return [
+  const allNetworks = [
     ...CLEARING_HOUSES,
     ...PAYMENT_PROCESSORS,
     ...SHARED_INFRASTRUCTURE,
     ...DIRECT_BANKS,
   ];
+
+  // Filter out future networks that are not yet technically integrated
+  return allNetworks.filter(network => !FUTURE_NETWORKS.includes(network.id));
 }
 
 export function getBankingNetworkById(id: string): BankingNetworkSource | undefined {
