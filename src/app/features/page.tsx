@@ -310,26 +310,6 @@ export default function FeaturesPage() {
       <div className="card-glass">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Banking Network Coverage</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-blue-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">🏛️</div>
-            <div className="font-bold text-gray-800">ACH-NACHA</div>
-            <div className="text-xs text-gray-600">Clearing House</div>
-          </div>
-          <div className="p-4 bg-purple-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">🌐</div>
-            <div className="font-bold text-gray-800">SWIFT</div>
-            <div className="text-xs text-gray-600">Global Network</div>
-          </div>
-          <div className="p-4 bg-green-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">🏦</div>
-            <div className="font-bold text-gray-800">FedWire</div>
-            <div className="text-xs text-gray-600">Federal Reserve</div>
-          </div>
-          <div className="p-4 bg-yellow-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">💼</div>
-            <div className="font-bold text-gray-800">CHIPS</div>
-            <div className="text-xs text-gray-600">Interbank Payments</div>
-          </div>
           <div className="p-4 bg-red-50 rounded-lg text-center">
             <div className="text-3xl mb-2">💳</div>
             <div className="font-bold text-gray-800">Visa/Mastercard</div>

@@ -117,7 +117,7 @@ const engine = new RPAEngine();
 
 // Schedule a new job
 await engine.scheduleJob({
-  name: 'Daily ACH Extract',
+  name: 'Daily Payment Extract',
   schedule: '0 0 * * *',
   dataSource: { /* config */ }
 });
@@ -178,7 +178,7 @@ const pipeline = new ETLPipeline();
 
 // Process extracted data
 const result = await pipeline.process({
-  source: 'ACH-NACHA',
+  source: 'Stripe-API',
   data: extractedData,
   schema: transactionSchema
 });

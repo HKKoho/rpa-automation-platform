@@ -9,74 +9,9 @@ export default function ExamplesPage() {
         </p>
       </div>
 
-      {/* Example 1: Schedule a Job */}
+      {/* Example 1: Web Automation */}
       <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 1: Schedule Daily ACH Extraction</h2>
-        <p className="text-gray-600 mb-4">
-          Schedule a recurring job to extract ACH transactions every day at midnight.
-        </p>
-        <div className="code-block">
-          <code className="text-sm">
-            {`import { RPAEngine } from '@/core/engine/RPAEngine';
-import type { RPAJob, DataSource } from '@/types/rpa.types';
-
-const engine = new RPAEngine();
-
-// Define data source configuration
-const achDataSource: DataSource = {
-  id: 'ach-nacha-prod',
-  type: 'clearinghouse',
-  name: 'ACH-NACHA Production',
-  protocol: 'REST',
-  baseUrl: 'https://api.ach-nacha.com',
-  authentication: {
-    method: 'oauth2',
-    credentialId: 'ach-oauth-token',
-  },
-  config: {
-    endpoints: {
-      transactions: '/v1/transactions',
-      settlements: '/v1/settlements',
-    },
-    rateLimit: {
-      requestsPerMinute: 100,
-      burstLimit: 150,
-    },
-  },
-};
-
-// Schedule daily extraction job
-const job = await engine.scheduleJob({
-  id: 'ach-daily-extract',
-  name: 'Daily ACH Transaction Extract',
-  description: 'Extract previous day ACH transactions at midnight',
-  schedule: '0 0 * * *', // Every day at 00:00 UTC
-  dataSource: achDataSource,
-  extractionConfig: {
-    dateRange: 'previous-day',
-    includeSettlements: true,
-    batchSize: 1000,
-  },
-  enabled: true,
-  retryPolicy: {
-    maxRetries: 3,
-    backoffMultiplier: 2,
-  },
-  notifications: {
-    onSuccess: ['admin@example.com'],
-    onFailure: ['ops-team@example.com'],
-  },
-});
-
-console.log('Job scheduled:', job.id);
-// Output: Job scheduled: ach-daily-extract`}
-          </code>
-        </div>
-      </div>
-
-      {/* Example 2: Web Automation */}
-      <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 2: Bank Portal Web Automation</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 1: Bank Portal Web Automation</h2>
         <p className="text-gray-600 mb-4">
           Automate login to a bank portal and extract transaction history using Puppeteer.
         </p>
@@ -160,9 +95,9 @@ try {
         </div>
       </div>
 
-      {/* Example 3: API Extraction */}
+      {/* Example 2: API Extraction */}
       <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 3: REST API Data Extraction</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 2: REST API Data Extraction</h2>
         <p className="text-gray-600 mb-4">
           Extract data from a payment processor's REST API with OAuth 2.0 authentication.
         </p>
@@ -241,9 +176,9 @@ return standardizedTransactions;`}
         </div>
       </div>
 
-      {/* Example 4: ETL Pipeline */}
+      {/* Example 3: ETL Pipeline */}
       <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 4: Process Data Through ETL Pipeline</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 3: Process Data Through ETL Pipeline</h2>
         <p className="text-gray-600 mb-4">
           Validate, transform, and load extracted banking transactions.
         </p>
@@ -350,9 +285,9 @@ return result;`}
         </div>
       </div>
 
-      {/* Example 5: Real-time Monitoring */}
+      {/* Example 4: Real-time Monitoring */}
       <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 5: Real-time Job Monitoring with WebSocket</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 4: Real-time Job Monitoring with WebSocket</h2>
         <p className="text-gray-600 mb-4">
           Subscribe to WebSocket events to monitor job execution in real-time.
         </p>
@@ -465,9 +400,9 @@ export function JobMonitor({ jobId }: { jobId: string }) {
         </div>
       </div>
 
-      {/* Example 6: Credential Management */}
+      {/* Example 5: Credential Management */}
       <div className="card-glass">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 6: Secure Credential Management</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Example 5: Secure Credential Management</h2>
         <p className="text-gray-600 mb-4">
           Store, retrieve, and rotate credentials securely using CredentialVault.
         </p>
