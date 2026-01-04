@@ -93,7 +93,19 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    serverComponentsExternalPackages: [
+      'puppeteer',
+      'puppeteer-core',
+      '@tensorflow/tfjs-node',
+      'bullmq',
+      'ioredis',
+      'bcrypt',
+      '@mapbox/node-pre-gyp',
+    ],
   },
+
+  // Output configuration for better serverless compatibility
+  output: 'standalone',
 };
 
 module.exports = nextConfig;
