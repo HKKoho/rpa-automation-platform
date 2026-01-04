@@ -24,7 +24,7 @@ export interface BatchInsertResult {
  * - IAM and access control management
  */
 export class BigQueryClient {
-  private client: BigQuery;
+  private client!: BigQuery; // Lazy initialized
   private dataset: string;
   private vault: CredentialVault;
   private initialized: boolean = false;
@@ -46,8 +46,8 @@ export class BigQueryClient {
       let credentials: any;
 
       try {
-        const credsJson = await this.vault.retrieve('gcp-bigquery-service-account');
-        credentials = JSON.parse(credsJson);
+        // Retrieve returns already-parsed credentials object
+        credentials = await this.vault.retrieve('gcp-bigquery-service-account');
       } catch (error) {
         // Fallback to key file path if not in vault
         if (process.env.GCP_KEY_FILE) {
@@ -196,11 +196,7 @@ export class BigQueryClient {
         autodetect: false, // Don't auto-detect schema, use table schema
       });
 
-      console.log(`[BigQueryClient] Load job started: ${job.id}`);
-
-      // Wait for job completion
-      await job.promise();
-      console.log(`[BigQueryClient] Successfully loaded data from ${filePath} into ${tableName}`);
+      console.log(`[BigQueryClient] Load job ${job.id} started and completed successfully for ${tableName}`);
     } catch (error) {
       console.error(`[BigQueryClient] File load failed:`, error);
       throw error;

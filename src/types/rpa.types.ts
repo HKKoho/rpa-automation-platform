@@ -12,6 +12,8 @@ export interface RPAJob {
   createdAt: Date;
   updatedAt: Date;
   lastRunAt?: Date;
+  description?: string;
+  tags?: string[];
 }
 
 export interface DataSource {

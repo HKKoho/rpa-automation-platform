@@ -5,6 +5,7 @@ import { WebAutomation } from '../extraction/WebAutomation';
 import { APIExtractor } from '../extraction/APIExtractor';
 import { QueueManager } from './QueueManager';
 import { AuditLogger } from '../security/AuditLogger';
+import { StorageManager } from '../pipeline/StorageManager';
 
 /**
  * Core RPA Engine for Banking Network Utility Operations
@@ -13,12 +14,14 @@ import { AuditLogger } from '../security/AuditLogger';
 export class RPAEngine extends EventEmitter {
   private queueManager: QueueManager;
   private auditLogger: AuditLogger;
+  private storage: StorageManager;
   private extractors: Map<string, any>;
 
   constructor() {
     super();
     this.queueManager = new QueueManager();
     this.auditLogger = new AuditLogger();
+    this.storage = new StorageManager();
     this.extractors = new Map();
 
     // Register extractors
@@ -77,6 +80,8 @@ export class RPAEngine extends EventEmitter {
    */
   async extractData(params: ExtractionParams): Promise<ExtractedData> {
     const startTime = Date.now();
+    const executionId = this.generateExecutionId();
+    const startedAt = new Date();
 
     try {
       // Select appropriate extractor
@@ -95,6 +100,7 @@ export class RPAEngine extends EventEmitter {
       await this.stageData(data);
 
       const duration = Date.now() - startTime;
+      const completedAt = new Date();
 
       // Log successful extraction
       await this.auditLogger.log({
@@ -108,10 +114,28 @@ export class RPAEngine extends EventEmitter {
         }
       });
 
+      // Track job execution in warehouse
+      await this.storage.loadJobExecution({
+        executionId,
+        jobId: params.jobId,
+        bankingNetworkId: params.source.bankingNetwork?.name,
+        status: 'success',
+        extractionMethod: params.source.extractionMethod || 'web-automation',
+        startedAt,
+        completedAt,
+        durationMs: duration,
+        recordsExtracted: data.metadata.recordCount,
+        recordsProcessed: data.metadata.recordCount,
+        errorCount: 0,
+        dataSizeBytes: data.dataSize,
+        extractionDurationMs: duration,
+      });
+
       this.emit('extraction:completed', { jobId: params.jobId, data });
       return data;
     } catch (error) {
       const duration = Date.now() - startTime;
+      const completedAt = new Date();
 
       await this.auditLogger.log({
         action: 'data.extraction.failed',
@@ -121,9 +145,30 @@ export class RPAEngine extends EventEmitter {
         changes: { duration }
       });
 
+      // Track failed execution in warehouse
+      await this.storage.loadJobExecution({
+        executionId,
+        jobId: params.jobId,
+        bankingNetworkId: params.source.bankingNetwork?.name,
+        status: 'failed',
+        extractionMethod: params.source.extractionMethod || 'web-automation',
+        startedAt,
+        completedAt,
+        durationMs: duration,
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
+        errorCount: 1,
+      });
+
       this.emit('extraction:failed', { jobId: params.jobId, error });
       throw error;
     }
+  }
+
+  /**
+   * Generate unique execution ID
+   */
+  private generateExecutionId(): string {
+    return `exec-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
 
   /**
