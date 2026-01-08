@@ -117,8 +117,7 @@ export default function PipelinePage() {
                 <ul className="text-sm text-gray-600 space-y-1">
                   <li>• PostgreSQL (transactional data)</li>
                   <li>• Data Warehouse (analytics)</li>
-                  <li>• S3 (archives and backups)</li>
-                  <li>• Event streams (Kafka, Kinesis)</li>
+                  <li>• Dynamic SL (archives and backups)</li>
                 </ul>
               </div>
               <div>
@@ -321,40 +320,6 @@ export default function PipelinePage() {
               <li>• Incremental ETL with CDC</li>
               <li>• Partitioning by date/region</li>
               <li>• Materialized views for aggregations</li>
-            </ul>
-          </div>
-
-          <div className="p-5 bg-white rounded-lg border-2 border-green-500">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">☁️</span>
-              <h3 className="text-lg font-bold text-gray-800">Amazon S3</h3>
-            </div>
-            <p className="text-sm text-gray-600 mb-3">
-              Object storage for archives, backups, and raw data lakes
-            </p>
-            <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Parquet/Avro format for compression</li>
-              <li>• S3 lifecycle policies (Glacier)</li>
-              <li>• Server-side encryption (SSE-S3)</li>
-              <li>• Versioning for data recovery</li>
-              <li>• Partitioned by date/source</li>
-            </ul>
-          </div>
-
-          <div className="p-5 bg-white rounded-lg border-2 border-yellow-500">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">📡</span>
-              <h3 className="text-lg font-bold text-gray-800">Event Streams</h3>
-            </div>
-            <p className="text-sm text-gray-600 mb-3">
-              Real-time data streaming to downstream consumers
-            </p>
-            <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Kafka/Kinesis topic publishing</li>
-              <li>• Schema registry integration</li>
-              <li>• Exactly-once delivery semantics</li>
-              <li>• Event sourcing patterns</li>
-              <li>• Stream processing (Flink/Spark)</li>
             </ul>
           </div>
         </div>

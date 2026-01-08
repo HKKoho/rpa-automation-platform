@@ -269,9 +269,9 @@ import { useWebSocket } from '@/hooks/useWebSocket';`}
 
       {/* WebSocket Integration */}
       <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">WebSocket Real-time Updates</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">WebSocket Processing Updates</h2>
         <p className="text-gray-600 mb-4">
-          Subscribe to real-time events for job updates and progress tracking.
+          Subscribe to call on or scheduled events for job updates and progress tracking.
         </p>
         <div className="code-block">
           <code className="text-sm">

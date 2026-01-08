@@ -9,38 +9,40 @@ This document summarizes the changes made to hide payment processors (Visa, Mast
 ## 1. Banking Networks Configuration (`config/bankingNetworks.ts`)
 
 ### **Hidden Networks**
-The following payment processors have been **commented out** (hidden from all pages):
+The following card networks have been **commented out** (hidden from all pages):
 
-- ❌ **Visa (VisaNet)** - Global card payment network
-- ❌ **Mastercard Network** - Global card payment network
-- ❌ **PayPal** - Online payment processor
-- ❌ **Stripe** - Online payment processor
+- ❌ **Visa (VisaNet)** - Global card payment network (infrastructure layer)
+- ❌ **Mastercard Network** - Global card payment network (infrastructure layer)
 
-**Reason**: Not applicable for construction company banking workflows
+**Reason**: Not merchant-facing - these are payment rails, not payment processors
 
-### **Remaining Payment Processor**
-- ✅ **Square** - Still available (kept for potential POS/payment use cases)
+### **Available Payment Processors**
+- ✅ **PayPal** - Online invoicing and subcontractor payments (RESTORED)
+- ✅ **Stripe** - Online deposits and recurring billing (RESTORED)
+- ✅ **Square** - POS and field payment processing
 
 ### **New Direct Bank Options Added**
 
 Two new banking network sources have been added to support construction company workflows:
 
-#### 1. **Email Authenticated Bank File Platform Download**
+#### 1. **Email/SMS Authenticated Bank File Platform Download**
 - **ID**: `email-authenticated-download`
 - **Type**: Direct Bank
-- **Description**: Automated download of bank statements and transaction files from email-authenticated banking platforms
+- **Description**: Automated download of bank statements and transaction files from email/SMS-authenticated banking platforms
 - **Features**:
   - Email inbox monitoring (IMAP/OAuth)
+  - SMS message monitoring and link extraction
   - Secure link extraction and validation
   - Automated file download and ingestion
   - Multi-format support (PDF, CSV, XLS, OFX)
-  - Email authentication handling
+  - Email/SMS authentication handling
 - **Best For**:
-  - Banks sending statements via email
+  - Banks sending statements via email/SMS
   - Secure file delivery platforms
   - Construction company banking workflows
   - High-security financial institutions
   - Banks with limited API access
+  - Mobile-first banking notifications
 
 #### 2. **Manual Scan Bank Hardcopy Statements**
 - **ID**: `manual-hardcopy-scan`
@@ -76,7 +78,7 @@ To:
 • Payment Processors (Square)
 • Shared Banking Infrastructure (FIS, Fiserv, Jack Henry, Temenos)
 • Direct Bank Web Automation
-• Email Authenticated Bank File Downloads
+• Email/SMS Authenticated Bank File Downloads
 • Manual Scan Bank Hardcopy Statements
 ```
 
@@ -84,7 +86,7 @@ To:
 - Section title changed to: **"Direct Bank Automation & Manual Processes"**
 - Now dynamically displays all three direct bank options:
   1. Generic Bank Portal Template
-  2. Email Authenticated Bank File Platform Download (NEW)
+  2. Email/SMS Authenticated Bank File Platform Download (NEW)
   3. Manual Scan Bank Hardcopy Statements (NEW)
 - Each option shows detailed features and best use cases
 
@@ -106,10 +108,10 @@ To:
 - **Direct Banks**: 1 option (Generic Bank Portal)
 - **Total Available Networks**: ~10 networks
 
-### **After Changes**
-- **Payment Processors**: 1 network (Square only)
-- **Direct Banks**: 3 options (Generic Portal + Email Download + Manual Scan)
-- **Total Available Networks**: ~8 networks (4 hidden, 2 added)
+### **After Changes (Current)**
+- **Payment Processors**: 3 networks (PayPal, Stripe, Square) - Visa & Mastercard hidden
+- **Direct Banks**: 3 options (Generic Portal + Email/SMS Download + Manual Scan)
+- **Total Available Networks**: ~10 networks (2 hidden, 4 added)
 
 ---
 
@@ -118,19 +120,19 @@ To:
 To verify the changes work correctly:
 
 - [ ] Visit `/docs/networks` page
-- [ ] Verify Visa, Mastercard, PayPal, Stripe are **not displayed**
-- [ ] Verify Square is still shown under Payment Processors
+- [ ] Verify Visa & Mastercard are **not displayed** (infrastructure layer)
+- [ ] Verify PayPal, Stripe, and Square **are displayed** under Payment Processors
 - [ ] Verify 3 Direct Bank options are displayed:
   - Generic Bank Portal Template
-  - Email Authenticated Bank File Platform Download
+  - Email/SMS Authenticated Bank File Platform Download
   - Manual Scan Bank Hardcopy Statements
 - [ ] Test API endpoint: `GET /api/sources`
-  - Verify `paymentProcessors` count = 1
+  - Verify `paymentProcessors` count = 3 (PayPal, Stripe, Square)
   - Verify `directBanks` count = 3
-  - Verify hidden networks are not in the response
+  - Verify Visa & Mastercard are not in the response
 - [ ] Check statistics on networks page:
-  - "Available Networks" count should be ~8
-  - "Payment Processors" count should be 1
+  - "Available Networks" count should be ~10
+  - "Payment Processors" count should be 3
 
 ---
 

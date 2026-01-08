@@ -4,8 +4,8 @@ export default function HomePage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="stat-card">
-          <div className="stat-number">24/7</div>
-          <div className="stat-label">Automation</div>
+          <div className="stat-number">Daily</div>
+          <div className="stat-label">Bank Business Day End Automation</div>
         </div>
         <div className="stat-card">
           <div className="stat-number">4-Layer</div>
@@ -137,10 +137,10 @@ export default function HomePage() {
               <span className="tech-tag">BullMQ</span>
               <span className="tech-tag">Redis</span>
               <span className="tech-tag">PostgreSQL</span>
-              <span className="tech-tag">BigQuery</span>
-              <span className="tech-tag">Docker</span>
-              <span className="tech-tag">Kubernetes</span>
-              <span className="tech-tag">Google Cloud</span>
+              <span className="tech-tag">Dynamics 365 Business Central</span>
+              <span className="tech-tag">Microsoft Azure</span>
+              <span className="tech-tag">Power BI Premium</span>
+              <span className="tech-tag">Oracle Finance (Alternative)</span>
             </div>
           </div>
         </div>
@@ -155,29 +155,22 @@ export default function HomePage() {
             <li className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
               <span className="text-2xl">💳</span>
               <div>
-                <div className="font-medium text-gray-800">Visa & Mastercard</div>
-                <div className="text-sm text-gray-600">Global card payment networks</div>
-              </div>
-            </li>
-            <li className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
-              <span className="text-2xl">💰</span>
-              <div>
-                <div className="font-medium text-gray-800">PayPal & Stripe</div>
-                <div className="text-sm text-gray-600">Online payment processors</div>
-              </div>
-            </li>
-            <li className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
-              <span className="text-2xl">🔧</span>
-              <div>
-                <div className="font-medium text-gray-800">FIS Global & Fiserv</div>
-                <div className="text-sm text-gray-600">Shared banking infrastructure</div>
+                <div className="font-medium text-gray-800">Payment Processors</div>
+                <div className="text-sm text-gray-600">Visa, Mastercard, PayPal, Stripe (All Tiers)</div>
               </div>
             </li>
             <li className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
               <span className="text-2xl">🌐</span>
               <div>
-                <div className="font-medium text-gray-800">Direct Bank Websites</div>
-                <div className="text-sm text-gray-600">Web automation templates</div>
+                <div className="font-medium text-gray-800">Direct Bank Access</div>
+                <div className="text-sm text-gray-600">Web automation, Email/SMS download, Manual hardcopy OCR (All Tiers)</div>
+              </div>
+            </li>
+            <li className="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
+              <span className="text-2xl">🔧</span>
+              <div>
+                <div className="font-medium text-gray-800">Shared Banking Infrastructure</div>
+                <div className="text-sm text-gray-600">FIS Global, Fiserv, Jack Henry, Temenos (Professional+ Tiers)</div>
               </div>
             </li>
           </ul>

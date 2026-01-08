@@ -27,47 +27,6 @@ export default function BankingNetworksPage() {
           </p>
         </div>
 
-        {/* Clearinghouse Warning */}
-        <div className="bg-yellow-50 border-2 border-yellow-400 p-6 mb-8 rounded-lg shadow-lg">
-          <div className="flex items-start gap-4">
-            <div className="text-yellow-600 text-3xl">⚠️</div>
-            <div>
-              <h2 className="text-2xl font-bold text-yellow-700 mb-2">
-                IMPORTANT: Clearinghouse Networks Reserved
-              </h2>
-              <p className="text-gray-700 mb-4">
-                Clearinghouse networks (ACH/NACHA, SWIFT, FedWire, CHIPS) are <strong>RESERVED</strong> for
-                the Banking Network Project and are <strong>NOT included</strong> in any pricing tier.
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <h3 className="text-gray-800 font-semibold mb-2">✅ Available Services:</h3>
-                  <ul className="text-gray-600 space-y-1">
-                    <li>• Payment Processors (Square)</li>
-                    <li>• Shared Banking Infrastructure (FIS, Fiserv, Jack Henry, Temenos)</li>
-                    <li>• Direct Bank Web Automation</li>
-                    <li>• Email Authenticated Bank File Downloads</li>
-                    <li>• Manual Scan Bank Hardcopy Statements</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-gray-800 font-semibold mb-2">ℹ️ Alternative Solutions:</h3>
-                  <ul className="text-gray-600 space-y-1">
-                    <li>• Use FIS Global for ACH processing</li>
-                    <li>• Use Fiserv for wire transfers</li>
-                    <li>• Use Jack Henry for banking APIs</li>
-                    <li>• Email/Manual processing available</li>
-                  </ul>
-                </div>
-              </div>
-              <p className="text-gray-700 mt-4 bg-blue-100 p-3 rounded">
-                <strong>Alternative:</strong> Use FIS Global, Fiserv, or Jack Henry (Professional+ tiers)
-                for API access to ACH and wire transfers without direct clearinghouse integration.
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* AI-Assisted Automation (NEW v2.0.0) */}
         <div className="bg-purple-50 border-2 border-purple-400 p-6 mb-8 rounded-lg shadow-lg">
           <div className="flex items-start gap-4">
@@ -122,7 +81,7 @@ export default function BankingNetworksPage() {
           </div>
           <div className="bg-orange-50 border-2 border-orange-400 rounded-lg p-6 text-center shadow-lg">
             <div className="text-3xl font-bold text-orange-600">{directBanks.length}</div>
-            <div className="text-gray-600">Direct Bank Options</div>
+            <div className="text-gray-600">Direct Bank Access</div>
           </div>
         </div>
 
@@ -177,61 +136,10 @@ export default function BankingNetworksPage() {
           </div>
         </section>
 
-        {/* Shared Infrastructure */}
+        {/* Direct Bank Access */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <span className="text-green-600">✅</span> Shared Banking Infrastructure
-            <span className="badge-primary text-sm ml-2">Professional+ Tiers</span>
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {sharedInfrastructure.map((network) => (
-              <div key={network.id} className="bg-blue-50 shadow-lg rounded-lg p-6 border border-blue-200">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-800">{network.name}</h3>
-                  <span className="badge-primary text-xs">{network.category}</span>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex gap-2 flex-wrap">
-                    <span className="text-gray-600">Auth:</span>
-                    {network.authMethods.map((method) => (
-                      <span key={method} className="badge-primary text-xs">
-                        {method}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <span className="text-gray-600">Protocols:</span>
-                    {network.protocols.map((protocol) => (
-                      <span key={protocol} className="badge-secondary text-xs">
-                        {protocol}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-4 text-gray-600 mt-3">
-                    {network.capabilities.realTime && <span>⚡ Real-Time</span>}
-                    {network.capabilities.batch && <span>📦 Batch</span>}
-                    {network.capabilities.webhooks && <span>🔔 Webhooks</span>}
-                  </div>
-                  {network.documentationUrl && (
-                    <a
-                      href={network.documentationUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-700 text-sm inline-block mt-2"
-                    >
-                      📚 Documentation →
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Direct Bank Automation */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <span className="text-green-600">✅</span> Direct Bank Automation & Manual Processes
+            <span className="text-green-600">✅</span> Direct Bank Access
             <span className="badge-success text-sm ml-2">AVAILABLE - All Tiers</span>
           </h2>
           <div className="grid md:grid-cols-1 gap-4">
@@ -273,28 +181,30 @@ export default function BankingNetworksPage() {
                 {network.id === 'email-authenticated-download' && (
                   <div>
                     <p className="text-gray-600 mb-4">
-                      Automated download of bank statements and transaction files from email-authenticated banking platforms.
-                      Perfect for construction companies receiving bank files via secure email links.
+                      Automated download of bank statements and transaction files from email/SMS-authenticated banking platforms.
+                      Perfect for construction companies receiving bank files via secure email links or SMS notifications with download links.
                     </p>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <h4 className="text-gray-800 font-semibold mb-2">Features:</h4>
                         <ul className="text-gray-600 space-y-1 text-sm">
                           <li>• Email inbox monitoring (IMAP/OAuth)</li>
+                          <li>• SMS message monitoring and link extraction</li>
                           <li>• Secure link extraction and validation</li>
                           <li>• Automated file download and ingestion</li>
                           <li>• Multi-format support (PDF, CSV, XLS, OFX)</li>
-                          <li>• Email authentication handling</li>
+                          <li>• Email/SMS authentication handling</li>
                         </ul>
                       </div>
                       <div>
                         <h4 className="text-gray-800 font-semibold mb-2">Best For:</h4>
                         <ul className="text-gray-600 space-y-1 text-sm">
-                          <li>• Banks sending statements via email</li>
+                          <li>• Banks sending statements via email/SMS</li>
                           <li>• Secure file delivery platforms</li>
                           <li>• Construction company banking workflows</li>
                           <li>• High-security financial institutions</li>
                           <li>• Banks with limited API access</li>
+                          <li>• Mobile-first banking notifications</li>
                         </ul>
                       </div>
                     </div>
@@ -350,6 +260,57 @@ export default function BankingNetworksPage() {
                   <div className="flex gap-4 text-gray-600 mt-3">
                     {network.capabilities.batch && <span>📦 Batch Processing</span>}
                     {!network.capabilities.realTime && <span>⏱️ Scheduled Execution</span>}
+                  </div>
+                  {network.documentationUrl && (
+                    <a
+                      href={network.documentationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-700 text-sm inline-block mt-2"
+                    >
+                      📚 Documentation →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Shared Banking Infrastructure Option */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span className="text-green-600">✅</span> Shared Banking Infrastructure Option
+            <span className="badge-primary text-sm ml-2">Professional+ Tiers</span>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {sharedInfrastructure.map((network) => (
+              <div key={network.id} className="bg-blue-50 shadow-lg rounded-lg p-6 border border-blue-200">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-gray-800">{network.name}</h3>
+                  <span className="badge-primary text-xs">{network.category}</span>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex gap-2 flex-wrap">
+                    <span className="text-gray-600">Auth:</span>
+                    {network.authMethods.map((method) => (
+                      <span key={method} className="badge-primary text-xs">
+                        {method}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    <span className="text-gray-600">Protocols:</span>
+                    {network.protocols.map((protocol) => (
+                      <span key={protocol} className="badge-secondary text-xs">
+                        {protocol}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-4 text-gray-600 mt-3">
+                    {network.capabilities.realTime && <span>⚡ Real-Time</span>}
+                    {network.capabilities.batch && <span>📦 Batch</span>}
+                    {network.capabilities.webhooks && <span>🔔 Webhooks</span>}
                   </div>
                   {network.documentationUrl && (
                     <a

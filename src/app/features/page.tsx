@@ -327,7 +327,7 @@ export default function FeaturesPage() {
             <div className="text-4xl mb-4">📊</div>
             <h3 className="text-lg font-bold mb-2 text-gray-800">Progress Tracking</h3>
             <p className="text-sm text-gray-600">
-              Real-time progress bars and status indicators for all operations
+              Processing progress bars and status indicators for all operations
             </p>
           </div>
 
@@ -344,26 +344,24 @@ export default function FeaturesPage() {
       {/* Banking Network Support */}
       <div className="card-glass">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Banking Network Coverage</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-red-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">💳</div>
-            <div className="font-bold text-gray-800">Visa/Mastercard</div>
-            <div className="text-xs text-gray-600">Card Networks</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+            <div className="text-3xl mb-3">💳</div>
+            <h3 className="font-bold text-gray-800 mb-2">Payment Processors</h3>
+            <p className="text-sm text-gray-600 mb-2">Visa, Mastercard, PayPal, Stripe</p>
+            <span className="badge-success text-xs">All Tiers</span>
           </div>
-          <div className="p-4 bg-indigo-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">💰</div>
-            <div className="font-bold text-gray-800">PayPal/Stripe</div>
-            <div className="text-xs text-gray-600">Online Processors</div>
+          <div className="p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+            <div className="text-3xl mb-3">🌐</div>
+            <h3 className="font-bold text-gray-800 mb-2">Direct Bank Access</h3>
+            <p className="text-sm text-gray-600 mb-2">Web automation, Email/SMS download, Manual hardcopy OCR</p>
+            <span className="badge-success text-xs">All Tiers</span>
           </div>
-          <div className="p-4 bg-pink-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">🔧</div>
-            <div className="font-bold text-gray-800">FIS/Fiserv</div>
-            <div className="text-xs text-gray-600">Infrastructure</div>
-          </div>
-          <div className="p-4 bg-teal-50 rounded-lg text-center">
-            <div className="text-3xl mb-2">🌐</div>
-            <div className="font-bold text-gray-800">Direct Banks</div>
-            <div className="text-xs text-gray-600">Web Automation</div>
+          <div className="p-6 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+            <div className="text-3xl mb-3">🔧</div>
+            <h3 className="font-bold text-gray-800 mb-2">Shared Banking Infrastructure</h3>
+            <p className="text-sm text-gray-600 mb-2">FIS Global, Fiserv, Jack Henry, Temenos</p>
+            <span className="badge-primary text-xs">Professional+ Tiers</span>
           </div>
         </div>
       </div>

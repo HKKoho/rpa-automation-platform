@@ -173,7 +173,7 @@ export default function ArchitecturePage() {
               <h3 className="text-lg font-bold text-gray-800">Banking Network Sources</h3>
             </div>
             <p className="text-sm text-gray-600 ml-10">
-              Clearinghouses, payment processors, banks → REST, SOAP, FIX, ISO20022, web automation
+              Payment processors (Visa, Mastercard, PayPal, Stripe) • Direct bank access (web automation, email/SMS download, manual OCR) • Shared infrastructure (FIS Global, Fiserv - Professional+ tiers)
             </p>
           </div>
 
@@ -193,7 +193,7 @@ export default function ArchitecturePage() {
               <h3 className="text-lg font-bold text-gray-800">Data Storage</h3>
             </div>
             <p className="text-sm text-gray-600 ml-10">
-              PostgreSQL (transactional) → Data warehouse (analytics) → S3 (archives)
+              PostgreSQL (transactional) → Microsoft Dynamic SL (storage or archives) or Microsoft Dynamics 365 (in future)
             </p>
           </div>
 
@@ -366,11 +366,19 @@ export default function ArchitecturePage() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-600">▸</span>
-                Docker/Kubernetes
+                Dynamics 365 Business Central
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-600">▸</span>
-                Google Cloud Platform
+                Microsoft Azure
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-green-600">▸</span>
+                Power BI Premium
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-green-600">▸</span>
+                Oracle Finance (Alternative)
               </li>
             </ul>
           </div>

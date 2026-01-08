@@ -14,44 +14,47 @@ export default function DeploymentPage() {
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Deployment Options</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="feature-card border-t-4 border-blue-500">
-            <div className="text-4xl mb-4 text-center">🐳</div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Docker</h3>
+            <div className="text-4xl mb-4 text-center">☁️</div>
+            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Microsoft Azure</h3>
             <p className="text-sm text-gray-600 text-center mb-4">
-              Containerized deployment for consistent environments
+              Cloud deployment on Microsoft Azure for Dynamics 365 integration
             </p>
             <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Multi-stage builds for optimization</li>
-              <li>• Docker Compose for local development</li>
-              <li>• Health checks and restart policies</li>
-              <li>• Volume mounts for data persistence</li>
+              <li>• Azure App Service for RPA platform</li>
+              <li>• Native Dynamics 365 connectivity</li>
+              <li>• Azure SQL Database / PostgreSQL</li>
+              <li>• Azure Cache for Redis</li>
+              <li>• Power BI Premium integration</li>
             </ul>
           </div>
 
           <div className="feature-card border-t-4 border-purple-500">
-            <div className="text-4xl mb-4 text-center">☸️</div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Kubernetes</h3>
+            <div className="text-4xl mb-4 text-center">▲</div>
+            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Vercel</h3>
             <p className="text-sm text-gray-600 text-center mb-4">
-              Orchestrated deployment for enterprise scale
+              Fast deployment for Next.js RPA platform frontend
             </p>
             <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Horizontal pod autoscaling</li>
-              <li>• Rolling updates with zero downtime</li>
-              <li>• ConfigMaps and Secrets management</li>
-              <li>• Ingress controllers for routing</li>
+              <li>• Instant deployment from GitHub</li>
+              <li>• Global CDN with edge functions</li>
+              <li>• Automatic HTTPS and SSL</li>
+              <li>• Preview deployments for testing</li>
+              <li>• Zero-config Next.js optimization</li>
             </ul>
           </div>
 
           <div className="feature-card border-t-4 border-green-500">
-            <div className="text-4xl mb-4 text-center">☁️</div>
-            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Cloud Native</h3>
+            <div className="text-4xl mb-4 text-center">🔶</div>
+            <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Oracle Cloud</h3>
             <p className="text-sm text-gray-600 text-center mb-4">
-              Managed services on GCP, AWS, or Azure
+              Alternative deployment for Oracle Finance integration
             </p>
             <ul className="text-sm text-gray-600 space-y-2">
-              <li>• Cloud Run / ECS / App Service</li>
-              <li>• Managed databases and Redis</li>
-              <li>• CDN and load balancing</li>
-              <li>• Auto-scaling based on metrics</li>
+              <li>• Oracle Cloud Infrastructure (OCI)</li>
+              <li>• Native Oracle Finance connectivity</li>
+              <li>• Oracle Autonomous Database</li>
+              <li>• OCI Container Engine</li>
+              <li>• Oracle Analytics Cloud</li>
             </ul>
           </div>
         </div>

@@ -108,7 +108,8 @@ export const CLEARING_HOUSES: BankingNetworkSource[] = [
 
 /**
  * Payment Processors - Card networks and payment gateways
- * NOTE: Visa, Mastercard, PayPal, and Stripe are hidden for construction company use case
+ * NOTE: Visa & Mastercard are hidden (infrastructure layer, not merchant-facing)
+ * INCLUDED: PayPal, Stripe, Square (merchant-facing payment processors)
  */
 export const PAYMENT_PROCESSORS: BankingNetworkSource[] = [
   // HIDDEN: Visa & Mastercard (Global card payment networks) - Not applicable for construction company
@@ -144,39 +145,38 @@ export const PAYMENT_PROCESSORS: BankingNetworkSource[] = [
   //     webhooks: true,
   //   },
   // },
-  // HIDDEN: PayPal & Stripe (Online payment processors) - Not applicable for construction company
-  // {
-  //   id: 'paypal',
-  //   name: 'PayPal',
-  //   type: 'payment-processor',
-  //   category: 'Payment Gateway',
-  //   authMethods: ['oauth', 'api-key'],
-  //   protocols: ['REST'],
-  //   url: 'https://www.paypal.com',
-  //   apiEndpoint: 'https://api.paypal.com',
-  //   documentationUrl: 'https://developer.paypal.com',
-  //   capabilities: {
-  //     realTime: true,
-  //     batch: true,
-  //     webhooks: true,
-  //   },
-  // },
-  // {
-  //   id: 'stripe',
-  //   name: 'Stripe',
-  //   type: 'payment-processor',
-  //   category: 'Payment Gateway',
-  //   authMethods: ['api-key'],
-  //   protocols: ['REST'],
-  //   url: 'https://stripe.com',
-  //   apiEndpoint: 'https://api.stripe.com',
-  //   documentationUrl: 'https://stripe.com/docs/api',
-  //   capabilities: {
-  //     realTime: true,
-  //     batch: true,
-  //     webhooks: true,
-  //   },
-  // },
+  {
+    id: 'paypal',
+    name: 'PayPal',
+    type: 'payment-processor',
+    category: 'Payment Gateway',
+    authMethods: ['oauth', 'api-key'],
+    protocols: ['REST'],
+    url: 'https://www.paypal.com',
+    apiEndpoint: 'https://api.paypal.com',
+    documentationUrl: 'https://developer.paypal.com',
+    capabilities: {
+      realTime: true,
+      batch: true,
+      webhooks: true,
+    },
+  },
+  {
+    id: 'stripe',
+    name: 'Stripe',
+    type: 'payment-processor',
+    category: 'Payment Gateway',
+    authMethods: ['api-key'],
+    protocols: ['REST'],
+    url: 'https://stripe.com',
+    apiEndpoint: 'https://api.stripe.com',
+    documentationUrl: 'https://stripe.com/docs/api',
+    capabilities: {
+      realTime: true,
+      batch: true,
+      webhooks: true,
+    },
+  },
   {
     id: 'square',
     name: 'Square',
@@ -285,13 +285,13 @@ export const DIRECT_BANKS: BankingNetworkSource[] = [
   },
   {
     id: 'email-authenticated-download',
-    name: 'Email Authenticated Bank File Platform Download',
+    name: 'Email/SMS Authenticated Bank File Platform Download',
     type: 'direct-bank',
     category: 'Other',
     authMethods: ['username-password-mfa'],
     protocols: ['web-automation'],
     url: 'https://example-bank.com/file-download',
-    documentationUrl: 'https://example-bank.com/help/email-authentication',
+    documentationUrl: 'https://example-bank.com/help/email-sms-authentication',
     capabilities: {
       realTime: false,
       batch: true,
