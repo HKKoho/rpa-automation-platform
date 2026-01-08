@@ -39,6 +39,7 @@ export default function PricingPage() {
       txPerDay: '100K',
       users: '10-25',
       support: '8x5 Email',
+      popular: true,
       features: [
         'Robocorp Cloud (10K runs)',
         'AI: Data normalization (1K calls/mo, DeepSeek)',
