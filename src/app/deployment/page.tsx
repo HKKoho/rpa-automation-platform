@@ -1,3 +1,6 @@
+import EnvironmentConfig from '@/components/deployment/EnvironmentConfig';
+import CICDPipeline from '@/components/deployment/CICDPipeline';
+
 export default function DeploymentPage() {
   return (
     <>
@@ -165,8 +168,8 @@ export default function DeploymentPage() {
         </div>
       </div>
 
-      {/* Docker Setup */}
-      <div className="card-glass mb-8">
+      {/* Docker Setup - Hidden for production guide */}
+      <div className="card-glass mb-8" style={{ display: 'none' }}>
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Docker Deployment</h2>
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3 text-gray-700">Dockerfile</h3>
@@ -346,8 +349,8 @@ docker-compose down -v`}
         </div>
       </div>
 
-      {/* Kubernetes Deployment */}
-      <div className="card-glass mb-8">
+      {/* Kubernetes Deployment - Hidden for production guide */}
+      <div className="card-glass mb-8" style={{ display: 'none' }}>
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Kubernetes Deployment</h2>
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3 text-gray-700">deployment.yaml</h3>
@@ -492,9 +495,11 @@ kubectl rollout undo deployment/rpa-platform -n rpa-platform`}
         </div>
       </div>
 
-      {/* Environment Variables */}
-      <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Environment Configuration</h2>
+      {/* Environment Configuration */}
+      <EnvironmentConfig />
+
+      <div style={{ display: 'none' }}>{/* Old Environment section hidden */}
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Environment Configuration OLD</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-lg font-semibold mb-3 text-gray-700">Production .env</h3>
@@ -602,8 +607,10 @@ SMTP_PASSWORD=SG.xxx`}
       </div>
 
       {/* CI/CD Pipeline */}
-      <div className="card-glass mb-8">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">CI/CD Pipeline</h2>
+      <CICDPipeline />
+
+      <div style={{ display: 'none' }}>{/* Old CI/CD section hidden */}
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">CI/CD Pipeline OLD</h2>
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3 text-gray-700">GitHub Actions Workflow</h3>
           <div className="code-block">
